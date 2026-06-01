@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import authMiddleware from "../middleware/authMiddleware.js";
 const router = Router();
 
+// createuser
 async function createUser(user) {
   const { userName, email, password } = user;
   const hashedPass = await bcrypt.hash(password, 10);
@@ -24,6 +25,7 @@ function generateToken(user) {
     process.env.JWT_SECRETE,
   );
 }
+// register
 router.post("/register", async (req, res) => {
   const user = req.body;
   const hashedPass = await createUser(user);
@@ -34,6 +36,7 @@ router.post("/register", async (req, res) => {
   });
 });
 
+// login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
